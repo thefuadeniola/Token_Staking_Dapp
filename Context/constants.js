@@ -1,3 +1,5 @@
+// THIS FILE IS TO READ THE DATA
+
 import { ethers } from "ethers";
 import StakingDappABI from './StakingDapp.json';
 import TokenICOABI from './TokenICO.json';
@@ -62,7 +64,7 @@ export const ERC20 = async(address, userAddress) => {
         const token = {
             name: await contractReader.name(),
             symbol: await contractReader.symbol(),
-            address: await contractReader.address(),
+            address: await contractReader.address,
             totalSupply: toEth(await contractReader.totalSupply()),
             balance: toEth (await contractReader.balanceOf(userAddress)),
             contractTokenBalance: toEth(await contractReader.balanceOf(STAKING_DAPP_ADDRESS))
@@ -140,7 +142,7 @@ export const TOKEN_ICO_ERC20 = async() => { // Token info relative to user
         const balance = await contractReader.balanceOf(userAddress);
 
         const token = {
-            address: await contractReader.address(),
+            address: await contractReader.address,
             name: await contractReader.name(),
             symbol: await contractReader.symbol(),
             decimals: await contractReader.decimals(),

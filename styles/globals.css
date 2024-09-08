@@ -135,6 +135,7 @@
 .scrollable-div {
   scrollbar-color: rgba(255, 255, 255, 0.2) transparent; /* Thumb color and track color */
   scrollbar-width: thin; /* Thin scrollbar */
+  overflow-x: scroll;
 }
 
 /* //ADMIN */

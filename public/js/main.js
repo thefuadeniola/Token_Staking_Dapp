@@ -10,7 +10,7 @@
         var header = document.querySelector('.header');
 
         headerBtn.addEventListener('click', function() {
-            headerBtn.classList.toggle('header__btn--active');
+            headerBtn.classList.toggle('--active');
             headerNav.classList.toggle('header__nav--active');
 
             if (window.scrollY === 0) {
