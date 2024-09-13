@@ -49,8 +49,8 @@ export async function CONTRACT_DATA(address) {
         const stakingTokenObj = await tokenContract();
 
         if(address) {
-            const contractOwner = await contractObject.owner();
-            const contractAddress = await contractObject.address;
+            const contractOwner = await contractObject.owner(); // 1
+            const contractAddress = await contractObject.address; // 2
 
             const notifications = await contractObject.getNotifications();
 
@@ -75,7 +75,7 @@ export async function CONTRACT_DATA(address) {
                 const poolInfo = await contractObject.poolInfo(i);
 
                 const userInfo = await contractObject.userInfo(i, address)
-                const userReward = contractObject.pendingReward(i, address)
+                const userReward = await contractObject.pendingReward(i, address)
 
                 const tokenPoolInfoA = await ERC20(poolInfo.depositToken, address)
                 const tokenPoolInfoB = await ERC20(poolInfo.rewardToken, address)
@@ -85,13 +85,13 @@ export async function CONTRACT_DATA(address) {
                     rewardTokenAddress: poolInfo.rewardToken,
                     depositToken: tokenPoolInfoA,
                     rewardToken: tokenPoolInfoB,
-                    depositedAmount: poolInfo.depositedAmount ? toEth(poolInfo.depositedAmount.toString()) : "0",
-                    apy: poolInfo.apy ? poolInfo.apy.toString() : "0",
-                    lockDays: poolInfo.lockDays ? poolInfo.lockDays.toString() : "0",
-                    amount: userInfo.amount ? toEth(userInfo.amount.toString()) : "0",
-                    userReward: userReward ? toEth(userReward) : "0",
-                    lockUntil: userInfo.lockUntil ? CONVERT_TIMESTAMP_TO_READABLE(userInfo.lockUntil.toNumber()) : "N/A",
-                    lastRewardAt: userInfo.lastRewardAt ? toEth(userInfo.lastRewardAt.toString()) : "0"
+                    depositedAmount: toEth(poolInfo.depositedAmount.toString()),
+                    apy: poolInfo.apy.toString(),
+                    lockDays: poolInfo.lockDays.toString(),
+                    amount: toEth(userInfo.amount.toString()),
+                    userReward: toEth(userReward),
+                    lockUntil: CONVERT_TIMESTAMP_TO_READABLE(userInfo.lockUntil.toNumber()),
+                    lastRewardAt: toEth(userInfo.lastRewardAt.toString())                
                 }
                                   
                 poolInfoArray.push(pool);
@@ -173,8 +173,9 @@ export async function transferToken(amount, transferAddress) {
             transferAddress,
             transferAmount
         )
-        await approveTx.wait();
+        const receipt = await approveTx.wait();
         notifySuccess("Tokens transferred successfully")
+        return receipt;
         
     } catch (error) {
         console.log(error)
@@ -325,7 +326,7 @@ export async function swap(tokenData) {
 
 // ADD TOKEN METAMASK
 
-export const addTokenMetaMask = async(token) => {
+export const addTokenMetaMask = async() => {
     if(window.ethereum){
         const contract = await tokenContract();
 
@@ -423,9 +424,10 @@ export const TOKEN_WITHDRAW = async () => {
     }
 }
 
-export const UPDATE_TOKEN = async (_address) => {q
+export const UPDATE_TOKEN = async (_address) => {
     if(!_address) return notifyError("Data is missing")
     try {
+        notifySuccess("Calling contract")
         const contract = await TOKEN_ICO_CONTRACT();
 
         const gasEstimation = await contract.estimateGas.updateToken(_address)
@@ -449,6 +451,8 @@ export const UPDATE_TOKEN = async (_address) => {q
 export const UPDATE_TOKEN_PRICE = async (price) => {
     try { 
         if(!price) return notifyError("Data is missing")
+        notifySuccess("Calling contract")
+
         const contract = await TOKEN_ICO_CONTRACT();
         const payAmount = ethers.utils.parseUnits(price.toString(), "ether")
 

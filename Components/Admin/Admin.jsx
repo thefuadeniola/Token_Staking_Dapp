@@ -17,18 +17,18 @@ const Admin = ({poolDetails, transferToken, address, setLoader, createPool, swap
 
           <div className="col-12 col-lg-9">
             <div className="tab-content">
-              <div className="tab-panel fade show active" id="tab-1" role="tabpanel">
+              <div className="tab-pane fade show active" id="tab-1" role="tabpanel">
                 <div className="row">
                   {
                     poolDetails?.poolInfoArray.map((pool, index) => (
-                      <AdminCard key={index} name={`Current APY: ${pool.apy}`}
+                      <AdminCard key={index} name={`Current APY: ${pool.apy} %`}
                         value={`${pool.depositedAmount} ${pool.depositToken.symbol}`}
                       />
                     ))
                   }
 
                   <AdminCard name={`Total Stake`}
-                    value={`${poolDetails?.depositedAmount ?? '-'} ${poolDetails?.depositToken.symbol}`}
+                    value={`${poolDetails?.totalDepositAmount ?? '-'} ${poolDetails?.depositToken.symbol}`}
                   />
 
                   <AdminCard name={`Your Balance`}
@@ -42,12 +42,12 @@ const Admin = ({poolDetails, transferToken, address, setLoader, createPool, swap
                   <Token token={poolDetails?.depositToken}/>
                 </div>
               </div>
-                  
-                  <Investing poolDetails={poolDetails}/>
-                  <Staking  poolDetails={poolDetails} swap={swap} setLoader={setLoader}/>
-                  <Transfer poolDetails={poolDetails} createPool={createPool} transferToken={transferToken} address={address} />
-                  <Pool poolDetails={poolDetails} createPool={createPool} setLoader={setLoader} setModifyPoolID={setModifyPoolID} />
-                  <ICOToken setLoader={setLoader} />
+
+              <Investing poolDetails={poolDetails}/>
+              <Staking  poolDetails={poolDetails} swap={swap} setLoader={setLoader}/>
+              <Transfer poolDetails={poolDetails} createPool={createPool} transferToken={transferToken} address={address} setLoader={setLoader}/>
+              <Pool poolDetails={poolDetails} createPool={createPool} setLoader={setLoader} setModifyPoolID={setModifyPoolID} />
+              <ICOToken setLoader={setLoader} />
 
             </div>
           </div>

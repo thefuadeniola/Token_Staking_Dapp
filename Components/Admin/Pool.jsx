@@ -55,9 +55,9 @@ const Pool = ({poolDetails, createPool, setLoader, setModifyPoolID}) => {
           </div>
 
           <div className="tab-pane fade" id="tab-f7" role="tabpanel">
-            <div className="row">
+            <div className="row" style={{position: "relative"}}>
               <Title title={"All Pools"} />
-              <div className="col-12" style={{position: "absolute"}}>
+              <div className="col-12">
                 <div className="scrollable-div" style={{overflowX: "scroll", width:"90%"}}>
                   <table className="deals__table">
                     <thead>
@@ -118,7 +118,7 @@ const Pool = ({poolDetails, createPool, setLoader, setModifyPoolID}) => {
 
                             <td>
                               <div className="deals__text deals__text--sell">
-                                <a className="header__profile" data-bs-target="modal-apool" type="button" data-bs-toggle="modal" onClick={() => setModifyPoolID(index)}>
+                                <a className="header__profile" data-bs-target="#modal-apool" type="button" data-bs-toggle="modal" onClick={() => setModifyPoolID(index)}>
                                   <i className="ti">
                                     <FaEdit />
                                   </i>
