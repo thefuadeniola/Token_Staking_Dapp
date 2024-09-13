@@ -28,7 +28,7 @@ const Header = ({
   ]
 
   return (
-    <header className="header">
+    <header className="header" style={{ backgroundColor: "#17142a" }}>
       <div className="container">
         <div className="row">
           <div className="col-12">

@@ -33,7 +33,7 @@ const index = () => {
   }, [address])
 
   return (
-  <>
+  <div className="body-backgroundColor">
     <Header />
     <HeroSection poolDetails={poolDetails} add={addTokenMetaMask} />
     <Statistics poolDetails={poolDetails} />
@@ -53,7 +53,7 @@ const index = () => {
     <ICOSale setLoader={setLoader} />
     {contactUs && <Contact setContactUs={setContactUs} /> }
     {loader && <Loader />}
-  </>
+  </div>
   );
 };
 

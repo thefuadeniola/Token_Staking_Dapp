@@ -25,7 +25,7 @@ const activities = () => {
   const [poolDetails, setPoolDetails] = useState()
 
   return (
-  <>
+  <div className="body-backgroundColor">
     <Header page={"activity"} />
     <div className="new-margin"></div>
       <Statistics poolDetails={poolDetails}/>
@@ -36,7 +36,7 @@ const activities = () => {
       {
         loader && <Loader />
       }
-  </>
+  </div>
 );
 };
 
